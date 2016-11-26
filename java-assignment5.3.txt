@@ -1,0 +1,147 @@
+public abstract class Employee {
+	public Employee(){
+		int empId;
+		String empName;
+		int total_leaves;
+		double total_salary;
+	}
+	abstract void calculate_balance_leaves();
+	
+	abstract boolean avail_leave(int no_of_leaves, char type_of_leave);
+	
+	abstract void calculate_salary();
+	
+}
+public class PermanentEmp extends Employee{
+	int empId,total_leave,no_of_leaves, total_leaves;
+	String empName;
+	double basic,hra,pfa;
+	char paid_leave,sick_leave,casual_leave;
+	
+	PermanentEmp()
+	{	Scanner scan= new Scanner(System.in);
+		System.out.println("Enter the Employee ID of Permanent employee");
+		this.empId= scan.nextInt();
+	
+		Scanner scan1= new Scanner(System.in);
+		System.out.println("Enter the Employee Name");
+		this.empName= scan1.nextLine();
+	
+		Scanner scan2= new Scanner(System.in);
+		System.out.println("Enter the Total leaves");
+		this.total_leave= scan2.nextInt();
+				
+		Scanner scan3= new Scanner(System.in);
+		System.out.println("Enter the Basic Salary of "+ empName);
+		this.basic= scan3.nextInt();
+		this.hra = 0.5*basic;
+		this.pfa = 0.12*basic;
+	}
+	void print_leave_details(){
+		System.out.println("Number of leaves available for "+empName+" is "+ total_leave);
+	}
+	
+	@Override
+	void calculate_balance_leaves(){
+		Scanner scan= new Scanner(System.in);
+		System.out.println("Enter the no_of_leaves");
+		this.no_of_leaves= scan.nextInt();
+		System.out.println("Leave balance is "+(total_leave-no_of_leaves));		
+	}
+	
+	@Override
+	boolean avail_leave(int no_of_leaves, char type_of_leave){
+		boolean b= true;
+		if(no_of_leaves>0)
+			{return b;}
+		else 
+			b= false;
+			return b;
+	}
+	@Override
+	void calculate_salary(){
+		double salary= basic+ hra- pfa;
+		System.out.println("Total Salary of"+empName+" is "+salary);
+		System.out.println("====================================");
+	}
+}
+public class TemporaryEmp extends Employee{
+	int empId,total_leave,no_of_leaves, total_leaves;
+	String empName;
+	double basic,hra,pfa;
+	char paid_leave,sick_leave,casual_leave;
+	
+	TemporaryEmp(){	
+		Scanner scan= new Scanner(System.in);
+		System.out.println("Enter the Employee ID of Temporary employee");
+		this.empId= scan.nextInt();
+	
+		Scanner scan1= new Scanner(System.in);
+		System.out.println("Enter the Employee Name");
+		this.empName= scan1.nextLine();
+	
+		Scanner scan2= new Scanner(System.in);
+		System.out.println("Enter the Total leaves");
+		this.total_leave= scan2.nextInt();
+				
+		Scanner scan3= new Scanner(System.in);
+		System.out.println("Enter the Basic Salary of "+ empName);
+		this.basic= scan3.nextInt();
+		this.hra = 0.5*basic;
+		this.pfa = 0.12*basic;
+	}
+	@Override
+	void calculate_balance_leaves(){
+		Scanner scan= new Scanner(System.in);
+		System.out.println("Enter the no_of_leaves");
+		this.no_of_leaves= scan.nextInt();
+		System.out.println("Leave balance is "+(total_leave-no_of_leaves));				
+	
+	}
+	
+	@Override
+	boolean avail_leave(int no_of_leavs, char type_of_leaves){
+		boolean b= true;
+		if(no_of_leaves>0)
+			{return b;}
+		else 
+			b= false;
+			return b;
+	}
+	@Override
+	void calculate_salary(){
+		double salary= basic+ hra- pfa;
+		System.out.println("Total Salary of"+empName+" is "+salary);
+		System.out.println("====================================");
+	}
+}
+public class Main {
+	public static void main(String[] args){
+		PermanentEmp p= new PermanentEmp();
+		p.print_leave_details();
+		p.calculate_balance_leaves();
+		
+		
+		Scanner scan1= new Scanner(System.in);
+		System.out.println("Enter the type of leave");
+		char type_of_leave= scan1.next().charAt(0);
+		int j=p.no_of_leaves;
+		System.out.println("Can he take leave :"+p.avail_leave(j, type_of_leave));
+		p.calculate_salary();
+		
+		
+		
+		TemporaryEmp t= new TemporaryEmp();
+		t.calculate_balance_leaves();
+		int i=t.no_of_leaves;
+	
+		Scanner scan4= new Scanner(System.in);
+		System.out.println("Enter the type of leave");
+		type_of_leave= scan4.next().charAt(0);
+		t.avail_leave(i, type_of_leave);
+		
+		System.out.println("can he take leave? :"+ t.avail_leave(i, type_of_leave) );
+		t.calculate_salary();
+	}
+
+}
